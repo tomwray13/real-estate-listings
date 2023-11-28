@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { CreateListingDto } from './dto/create-listing.dto';
 import { DatabaseService } from '../../database/database.service';
+import { ListingProducer } from './queue/listing.producer';
 
 @Injectable()
 export class ListingService {
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(
+    private readonly databaseService: DatabaseService,
+    private readonly listingQueue: ListingProducer,
+  ) {}
 
   async create({
     data,
@@ -17,8 +21,8 @@ export class ListingService {
       data,
     });
     for (const image of images) {
-      // do something with image
-      console.log(`image`, image);
+      // send image to queue
+      await this.listingQueue.createListingImage(image);
     }
     return listing;
   }

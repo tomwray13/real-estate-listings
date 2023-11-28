@@ -28,7 +28,7 @@ export class ListingController {
           new MaxFileSizeValidator({ maxSize: 1024 * 1024 }), // 1MB
         ],
       }),
-      new MaxFileCountValidationPipe(1),
+      new MaxFileCountValidationPipe(50),
     )
     files: Express.Multer.File[],
   ) {

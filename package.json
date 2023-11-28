@@ -28,6 +28,7 @@
     "docker:down:test": "dotenv -e .env.test -- docker-compose -f docker-compose-test.yml down"
   },
   "dependencies": {
+    "@nestjs/bull": "^10.0.1",
     "@nestjs/cache-manager": "^2.1.1",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
@@ -35,6 +36,7 @@
     "@nestjs/mapped-types": "^2.0.4",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^5.6.0",
+    "bull": "^4.11.5",
     "cache-manager": "^5.3.1",
     "cache-manager-redis-store": "2",
     "class-transformer": "^0.5.1",

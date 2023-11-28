@@ -11,6 +11,7 @@ import { DatabaseModule } from '../database/database.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
 import { CacheService } from './cache/cache.service';
+import { QueueModule } from './queue/queue.module';
 
 @Global()
 @Module({
@@ -38,6 +39,7 @@ import { CacheService } from './cache/cache.service';
       },
       inject: [ConfigService],
     }),
+    QueueModule,
   ],
   providers: [
     {
