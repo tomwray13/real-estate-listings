@@ -1,5 +1,6 @@
 import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
 import { CreateListingInput } from '../listing.types';
+import { Type } from 'class-transformer';
 
 export class CreateListingDto implements CreateListingInput {
   @IsString()
@@ -29,17 +30,21 @@ export class CreateListingDto implements CreateListingInput {
 
   @IsInt()
   @Min(0)
+  @Type(() => Number)
   price: number;
 
   @IsInt()
   @Min(0)
+  @Type(() => Number)
   bathrooms: number;
 
   @IsInt()
   @Min(0)
+  @Type(() => Number)
   bedrooms: number;
 
   @IsInt()
   @Min(0)
+  @Type(() => Number)
   squareMeters: number;
 }
