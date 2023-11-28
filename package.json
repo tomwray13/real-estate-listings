@@ -28,6 +28,9 @@
     "docker:down:test": "dotenv -e .env.test -- docker-compose -f docker-compose-test.yml down"
   },
   "dependencies": {
+    "@bull-board/api": "^5.9.2",
+    "@bull-board/express": "^5.9.2",
+    "@bull-board/nestjs": "^5.9.2",
     "@nestjs/bull": "^10.0.1",
     "@nestjs/cache-manager": "^2.1.1",
     "@nestjs/common": "^10.0.0",

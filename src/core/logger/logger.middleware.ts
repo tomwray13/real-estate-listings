@@ -12,7 +12,8 @@ export class LoggerMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: NextFunction) {
     const environment = this.configService.get(`environment`);
-    if (environment === 'test') {
+    const isQueueRoute = req.url.startsWith('/queue'); // <-- Check if the URL starts with /queue
+    if (environment === 'test' || isQueueRoute) {
       return next();
     }
     const start = Date.now();
