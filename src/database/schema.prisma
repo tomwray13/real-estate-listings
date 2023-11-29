@@ -24,4 +24,14 @@ model Listing {
   squareMeters    Int
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+  images          ListingImage[]
+}
+
+model ListingImage {
+  id          Int       @id @default(autoincrement())
+  url         String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  listing     Listing @relation(fields: [listingId], references: [id])
+  listingId   Int
 }
