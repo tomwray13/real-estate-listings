@@ -31,6 +31,7 @@
     "@bull-board/api": "^5.9.2",
     "@bull-board/express": "^5.9.2",
     "@bull-board/nestjs": "^5.9.2",
+    "@google-cloud/storage": "^7.6.0",
     "@nestjs/bull": "^10.0.1",
     "@nestjs/cache-manager": "^2.1.1",
     "@nestjs/common": "^10.0.0",
@@ -45,6 +46,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "helmet": "^7.1.0",
+    "nanoid": "3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "winston": "^3.11.0"
