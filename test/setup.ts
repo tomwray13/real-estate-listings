@@ -5,7 +5,7 @@ import { CacheService } from '../src/core/cache/cache.service';
 import { DatabaseService } from '../src/database/database.service';
 import helmet from 'helmet';
 import { GoogleCloudService } from '../src/services/google-cloud/google-cloud.service';
-import { createMock } from '@golevelup/ts-jest';
+import { DeepMocked, createMock } from '@golevelup/ts-jest';
 import { Queue } from 'bull';
 import { LISTING_QUEUE } from '../src/core/queue/queue.constants';
 
@@ -14,6 +14,7 @@ let server: HttpServer;
 let moduleFixture: TestingModule;
 let cache: CacheService;
 let database: DatabaseService;
+let googleCloudService: DeepMocked<GoogleCloudService>;
 let listingQueue: Queue;
 
 beforeAll(async () => {
@@ -35,7 +36,13 @@ beforeAll(async () => {
   // Get instances of services
   cache = moduleFixture.get<CacheService>(CacheService);
   database = moduleFixture.get<DatabaseService>(DatabaseService);
-  listingQueue = moduleFixture.get<Queue>(`BullQueue_${LISTING_QUEUE}`); // <-- get the queue instance using the LISTING_QUEUE constant
+  googleCloudService = moduleFixture.get(GoogleCloudService);
+  listingQueue = moduleFixture.get<Queue>(`BullQueue_${LISTING_QUEUE}`);
+
+  // Apply any test doubles and mocks:
+  googleCloudService.uploadFile = jest
+    .fn()
+    .mockResolvedValue(`https://test.com`);
 
   await app.init();
   server = app.getHttpServer();

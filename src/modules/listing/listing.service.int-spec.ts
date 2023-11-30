@@ -1,6 +1,5 @@
 import { app, listingQueue } from '../../../test/setup';
 import { DatabaseService } from '../../database/database.service';
-import { GoogleCloudService } from '../../services/google-cloud/google-cloud.service';
 import {
   generateCreateListingPayload,
   generateListingImages,
@@ -10,12 +9,10 @@ import { ListingService } from './listing.service';
 describe(`ListingService Integration Tests`, () => {
   let listingService: ListingService;
   let databaseService: DatabaseService;
-  let googleCloudService: GoogleCloudService;
 
   beforeAll(async () => {
     listingService = app.get(ListingService);
     databaseService = app.get(DatabaseService);
-    googleCloudService = app.get(GoogleCloudService);
   });
 
   describe(`create`, () => {
@@ -34,9 +31,6 @@ describe(`ListingService Integration Tests`, () => {
     });
 
     it(`should create a listing with images`, async () => {
-      googleCloudService.uploadFile = jest
-        .fn()
-        .mockResolvedValue(`https://test.com`);
       const payload = generateCreateListingPayload();
       const images = generateListingImages();
       const listing = await listingService.create({
