@@ -1,7 +1,7 @@
 import * as request from 'supertest';
 import { server } from './setup';
 import { generateCreateListingPayload } from '../src/modules/listing/__tests__/test-utils';
-import { join } from 'path';
+import { resolve } from 'path';
 
 describe(`ListingController (e2e)`, () => {
   describe(`POST /listing`, () => {
@@ -18,7 +18,7 @@ describe(`ListingController (e2e)`, () => {
       squareMeters,
     } = generateCreateListingPayload();
 
-    const imagePath = join(
+    const imagePath = resolve(
       __dirname,
       `../src/modules/listing/__tests__/images/image-1.png`,
     );
@@ -91,10 +91,6 @@ describe(`ListingController (e2e)`, () => {
     });
 
     it(`should return 400 when more than 2 images attached`, () => {
-      const imagePath = join(
-        __dirname,
-        `../src/modules/listing/__tests__/images/image_1.jpg`,
-      );
       return request(server)
         .post(`/listing`)
         .field(`label`, label)
@@ -110,6 +106,27 @@ describe(`ListingController (e2e)`, () => {
         .attach(`images`, imagePath)
         .attach(`images`, imagePath)
         .attach(`images`, imagePath)
+        .expect(400);
+    });
+
+    it(`should return 400 when invalid file used`, () => {
+      const invalidImagePath = resolve(
+        __dirname,
+        `../src/modules/listing/__tests__/test-utils.ts`,
+      );
+      return request(server)
+        .post(`/listing`)
+        .field(`label`, label)
+        .field(`addressLine1`, addressLine1)
+        .field(`addressLine2`, addressLine2)
+        .field(`addressZipcode`, addressZipcode)
+        .field(`addressCity`, addressCity)
+        .field(`addressState`, addressState)
+        .field(`price`, `non-number`)
+        .field(`bathrooms`, bathrooms)
+        .field(`bedrooms`, bedrooms)
+        .field(`squareMeters`, squareMeters)
+        .attach(`images`, invalidImagePath)
         .expect(400);
     });
   });
